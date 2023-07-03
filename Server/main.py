@@ -1,3 +1,5 @@
+# Set-ExecutionPolicy Unrestricted -Scope Process
+
 from fastapi import FastAPI
 
 app = FastAPI()

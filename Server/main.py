@@ -5,16 +5,45 @@ import subprocess
 
 app = FastAPI()
 
-run_once = 1
-port = 5050
+# Global Variable
+
+port = 5080
 ngrok = "ngrok.exe http "+str(port)
+uvicorn = "uvicorn main:app --reload --port "+str(port)
+
+# Global Variables end
+
+# Private Function Prototypes
+
+def ngrok_Initialize():
+    print("\nstarting global server.......")
+    subprocess.Popen('start cmd /c'+ngrok,shell = True)
+    return True
+
+def uvicorn_Initialize():
+    print("\nstarting local server.......")
+    subprocess.Popen('start cmd /c'+uvicorn,shell = True)
+    return True
+# Function prototype end
+
+
+
+run_once = 1
+Status = False
+
 # date = "date"
 while 1:
     if run_once == 1: 
-        print("starting ngrok server.......")
-        os_data = subprocess.Popen('start cmd /c'+ngrok)
-        print(os_data.decode("utf-8"))
+        # Status = uvicorn_Initialize()
+        Status = True
+        # Status = ngrok_Initialize()
         run_once = 0
+        # if(True == Status):
+        #     Status = False
+        #     Status = ngrok_Initialize()
+        # if(False == Status):
+        #     print("Error! Please check ngrok and uvicorn connection")
+        #     break
         
     # os.system()
     @app.get("/")
@@ -23,3 +52,6 @@ while 1:
     @app.get("/request/{request_dat}")
     async def name_func(request_dat):
         return {"you have sent this to us : "+ request_dat}
+    @app.get("/akdata")
+    async def data():
+        return{"akhils data"}

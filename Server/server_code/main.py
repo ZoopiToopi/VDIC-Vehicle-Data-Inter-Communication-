@@ -9,3 +9,6 @@ data = {   #sample data for db
         'longitude': '76.92835384022985'
        }
 db.DB_Create('test_data',1995,data) #creating db with provided name,id and data
+
+data = db.DB_Read('test_data')
+print(data['1995']['latitude'])

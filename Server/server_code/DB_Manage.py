@@ -15,3 +15,10 @@ def DB_Create(db_name,id,data):
         ref.child(str(id)).set(data)
     except Exception as e:
         print("DB creation failed error: ",str(e))
+        
+def DB_Read(path):
+    try:
+        ref = db.reference(str(path))
+        return ref.get()
+    except Exception as e:
+        print("DB Read failed error: ",str(e))

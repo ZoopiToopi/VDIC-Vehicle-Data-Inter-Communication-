@@ -9,16 +9,37 @@ def DB_init():
     except Exception as e:
         print("DB Initialization Failed error: ",str(e))
 
-def DB_Create(db_name,id,data):
+def DB_Create(root,parent,parent1,parent2,parent1_data,parent2_data):
     try:
-        ref = db.reference(str(db_name))
-        ref.child(str(id)).set(data)
+        ref = db.reference(str(root))
+        main = ref.child(str(parent))
+        p1 = main.child(parent1)
+        p1.set(parent1_data)
+        p2 = main.child(str(parent2))
+        p2.set(parent2_data)
     except Exception as e:
         print("DB creation failed error: ",str(e))
+        
+
         
 def DB_Read(path):
     try:
         ref = db.reference(str(path))
         return ref.get()
+    except Exception as e:
+        print("DB Read failed error: ",str(e))
+        
+    
+def DB_same_road(path,filter):
+    try:
+        ref = db.reference(str(path))
+        dup = {}
+        data =ref.get()
+        for road in data:
+            if road in dup:
+                dup.append(data['road'])
+            else:
+                dup['road'] = data['road']
+        print(dup)
     except Exception as e:
         print("DB Read failed error: ",str(e))
